@@ -1,0 +1,11 @@
+fastapi
+uvicorn
+torch
+torchvision
+Pillow
+openai
+google-cloud-translate
+google-cloud-texttospeech
+python-multipart
+#vertexai
+#google-cloud-aiplatform
