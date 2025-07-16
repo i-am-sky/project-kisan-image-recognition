@@ -67,6 +67,14 @@ The API responds with:
 }
 
 ```
+
+Create `.env` in the root of your project with:
+
+```
+GOOGLE_APPLICATION_CREDENTIALS=/absolute/path/to/service-account.json
+GCP_PROJECT_ID=your-google-cloud-project-id
+GCP_REGION=us-central1
+```
 ---
 ### NOTE: Make sure your .json file has access to:
 Vertex AI
