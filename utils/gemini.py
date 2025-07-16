@@ -1,18 +1,41 @@
-import openai
 import os
+from dotenv import load_dotenv
+from vertexai.language_models import ChatModel, InputOutputTextPair
+import vertexai
 
-openai.api_key = os.getenv("OPENAI_API_KEY")
+load_dotenv()
 
-def get_gemini_response(disease):
-    prompt = f"""
-    A tomato crop is affected by: {disease}.
-    1. Explain what it is and how to cure it using affordable remedies.
-    2. List common government schemes related to crop protection or subsidies.
-    3. Estimate current tomato market prices in Karnataka.
-    Provide the response in 3 simple paragraphs.
+# Set Google Cloud project + location from .env
+PROJECT_ID = os.getenv("GCP_PROJECT_ID")
+LOCATION = os.getenv("GCP_REGION", "us-central1")  # default region
+
+def get_gemini_response(disease: str) -> str:
     """
-    response = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo",
-        messages=[{"role": "user", "content": prompt}]
-    )
-    return response.choices[0].message.content
+    Get expert farming advice for a disease using Gemini on Vertex AI.
+    """
+    if not disease:
+        raise ValueError("Disease name is required for Gemini response.")
+
+    try:
+        # Initialize Vertex AI SDK
+        vertexai.init(project=PROJECT_ID, location=LOCATION)
+
+        # Load Gemini chat model
+        chat_model = ChatModel.from_pretrained("chat-bison@001")
+        chat = chat_model.start_chat()
+
+        prompt = (
+            f"A farmer has a tomato plant suffering from '{disease}'. "
+            "Provide simple, farmer-friendly advice on:\n"
+            "- Disease explanation\n"
+            "- Low-cost treatments available locally\n"
+            "- Current market price for tomatoes (if possible)\n"
+            "- Relevant government schemes for help\n\n"
+            "Please keep it short, clear, and rural-friendly."
+        )
+
+        response = chat.send_message(prompt)
+        return response.text.strip()
+
+    except Exception as e:
+        raise RuntimeError(f"Vertex AI Gemini error: {e}")
