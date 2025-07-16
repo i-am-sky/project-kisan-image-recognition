@@ -66,3 +66,10 @@ The API responds with:
   "audio_url": "/audio"
 }
 
+```
+---
+### NOTE: Make sure your .json file has access to:
+Vertex AI
+Translate API
+Text-to-Speech API
+
