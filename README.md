@@ -104,3 +104,22 @@ The response will be like:
 ```
 You can GET the audio at:
 `GET /audio/response_XXXX.mp3`
+
+---
+
+```
+Upload Photo
+	|
+Disease Dectection using pyTorch model
+	|
+Prompt Gemini (vertex AI)
+	|
+Translate to Kannada
+	|
+Covert Text to Speech
+	|
+Send api response
+	|
+Get summary
+
+```
