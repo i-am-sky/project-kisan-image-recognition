@@ -80,3 +80,27 @@ GCP_REGION=us-central1
 Vertex AI
 Translate API
 Text-to-Speech API
+---
+
+Run the FastAPI App
+From the root of your project, run:
+`uvicorn api.main:app --reload`
+FastAPI will start the backend at:
+`http://127.0.0.1:8000`
+You can now test the endpoint:
+
+🧪 Endpoint to Test:
+```POST /full-analysis
+Form-data:
+- file: <your-leaf-image.jpg>
+```
+The response will be like:
+```
+{
+  "disease": "Tomato Leaf Mold",
+  "summary": "ಈ ರೋಗವು...",
+  "audio_url": "/audio/response_XXXX.mp3"
+}
+```
+You can GET the audio at:
+`GET /audio/response_XXXX.mp3`
